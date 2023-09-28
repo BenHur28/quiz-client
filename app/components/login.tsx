@@ -31,32 +31,37 @@ const Login = () => {
 	return (
 		<div className="flex justify-center items-center h-full ">
 			<form
-				className="p-20 rounded-md bg-blue-300"
+				className="pl-20 pr-20 pt-12 pb-6 rounded-md bg-[#282820]"
 				onSubmit={handleSubmit(submitData)}
 			>
 				<div className="flex flex-col justify-center items-center mx-auto">
-					<label className="mb-2">Username</label>
+					<h1 className="text-white mb-5 text-4xl">Quiz App</h1>
+					<label className="mb-2 text-white">Username</label>
 					<input
 						className="border rounded-md"
 						type="text"
 						{...register("username")}
 					/>
 					{errors.username && (
-						<span className="text-red-500">{errors.username.message}</span>
+						<span className="text-red-500 text-sm mt-2">
+							{errors.username.message}
+						</span>
 					)}
-					<label className="my-2">Password</label>
+					<label className="my-2 text-white">Password</label>
 					<input
 						className="border rounded-md"
 						type="password"
 						{...register("password")}
 					/>
 					{errors.password && (
-						<span className="text-red-500">{errors.password.message}</span>
+						<span className="text-red-500 text-sm mt-2">
+							{errors.password.message}
+						</span>
 					)}
-					<button type="submit" className="bg-white mt-6 px-4 py-1 rounded-md">
+					<button type="submit" className="bg-white mt-6 px-8 py-2 rounded-md">
 						Login
 					</button>
-					<Link href={"/create"} className="mt-10 text-sm">
+					<Link href={"/create"} className="mt-10 text-sm text-white">
 						Dont have an account? Create an account
 					</Link>
 				</div>
