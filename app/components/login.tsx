@@ -4,16 +4,17 @@ import { ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { ENDPOINTS, createAPIEndpoint } from "../api";
 
 type FormData = {
-	username: string;
-	password: string;
+	name: string;
+	email: string;
 };
 
 const Login = () => {
 	const formSchema: ZodType<FormData> = z.object({
-		username: z.string().min(5),
-		password: z.string().min(5),
+		name: z.string().min(1),
+		email: z.string().min(1),
 	});
 
 	const {
@@ -24,15 +25,18 @@ const Login = () => {
 		resolver: zodResolver(formSchema),
 	});
 
-	const submitData = (data: FormData) => {
-		console.log(data);
+	const login = (data: FormData, e: any) => {
+		e.preventDefault();
+		createAPIEndpoint(ENDPOINTS.participant)
+			.post(data)
+			.then((res) => console.log(res));
 	};
 
 	return (
 		<div className="flex justify-center items-center h-full ">
 			<form
 				className="pl-20 pr-20 pt-12 pb-6 rounded-md bg-[#282820]"
-				onSubmit={handleSubmit(submitData)}
+				onSubmit={handleSubmit(login)}
 			>
 				<div className="flex flex-col justify-center items-center mx-auto">
 					<h1 className="text-white mb-5 text-4xl">Quiz App</h1>
@@ -40,22 +44,22 @@ const Login = () => {
 					<input
 						className="border rounded-md"
 						type="text"
-						{...register("username")}
+						{...register("name")}
 					/>
-					{errors.username && (
+					{errors.name && (
 						<span className="text-red-500 text-sm mt-2">
-							{errors.username.message}
+							{errors.name.message}
 						</span>
 					)}
-					<label className="my-2 text-white">Password</label>
+					<label className="my-2 text-white">Email</label>
 					<input
 						className="border rounded-md"
-						type="password"
-						{...register("password")}
+						type="email"
+						{...register("email")}
 					/>
-					{errors.password && (
+					{errors.email && (
 						<span className="text-red-500 text-sm mt-2">
-							{errors.password.message}
+							{errors.email.message}
 						</span>
 					)}
 					<button type="submit" className="bg-white mt-6 px-8 py-2 rounded-md">
