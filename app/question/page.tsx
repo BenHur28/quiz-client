@@ -1,5 +1,10 @@
+"use client";
+import { useContextStore } from "@/hooks/useContextStore";
+
 const QuestionPage = () => {
-	return <div className="text-white">QuestionPage</div>;
+	const { participantId, setContext } = useContextStore();
+
+	return <div className="text-white">{participantId}</div>;
 };
 
 export default QuestionPage;

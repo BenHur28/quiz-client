@@ -3,8 +3,9 @@ import * as z from "zod";
 import { ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { ENDPOINTS, createAPIEndpoint } from "../api";
+import { useContextStore } from "@/hooks/useContextStore";
+import { useRouter } from "next/navigation";
 
 type FormData = {
 	name: string;
@@ -12,6 +13,8 @@ type FormData = {
 };
 
 const Login = () => {
+	const router = useRouter();
+	const { setContext } = useContextStore();
 	const formSchema: ZodType<FormData> = z.object({
 		name: z.string().min(1),
 		email: z.string().min(1),
@@ -29,7 +32,11 @@ const Login = () => {
 		e.preventDefault();
 		createAPIEndpoint(ENDPOINTS.participant)
 			.post(data)
-			.then((res) => console.log(res))
+			.then((res) => {
+				const id = res.data;
+				setContext(id.participantId);
+				router.push("/question");
+			})
 			.catch((err) => console.log(err));
 	};
 
