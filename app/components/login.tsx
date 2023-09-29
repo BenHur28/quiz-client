@@ -29,7 +29,8 @@ const Login = () => {
 		e.preventDefault();
 		createAPIEndpoint(ENDPOINTS.participant)
 			.post(data)
-			.then((res) => console.log(res));
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	};
 
 	return (
