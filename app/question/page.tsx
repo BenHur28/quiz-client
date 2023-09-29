@@ -2,9 +2,9 @@
 import { useContextStore } from "@/hooks/useContextStore";
 
 const QuestionPage = () => {
-	const { participantId, setContext } = useContextStore();
-
-	return <div className="text-white">{participantId}</div>;
+	const id = useContextStore((state) => state.participantId);
+	localStorage.getItem(id);
+	return <div className="text-white">{id}</div>;
 };
 
 export default QuestionPage;

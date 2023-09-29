@@ -1,11 +1,20 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type ContextState = {
-	participantId: number;
-	setContext: (id: number) => void;
+	participantId: string;
+	setContext: (id: string) => void;
 };
 
-export const useContextStore = create<ContextState>((set) => ({
-	participantId: 0,
-	setContext: (participantId: number) => set({ participantId }),
-}));
+export const useContextStore = create<ContextState>()(
+	persist(
+		(set) => ({
+			participantId: "0",
+			setContext: (participantId: string) => set({ participantId }),
+		}),
+		{
+			name: "id store",
+			storage: createJSONStorage(() => sessionStorage),
+		}
+	)
+);
