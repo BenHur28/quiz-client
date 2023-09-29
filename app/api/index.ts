@@ -4,6 +4,7 @@ export const BASE_URL = "http://localhost:5243/";
 
 export const ENDPOINTS = {
 	participant: "participants",
+	question: "questions",
 };
 
 type participant = {
