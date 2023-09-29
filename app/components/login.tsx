@@ -43,7 +43,7 @@ const Login = () => {
 					<h1 className="text-white mb-5 text-4xl">Quiz App</h1>
 					<label className="mb-2 text-white">Username</label>
 					<input
-						className="border rounded-md"
+						className="border rounded-sm"
 						type="text"
 						{...register("name")}
 					/>
@@ -54,7 +54,7 @@ const Login = () => {
 					)}
 					<label className="my-2 text-white">Email</label>
 					<input
-						className="border rounded-md"
+						className="border rounded-sm"
 						type="email"
 						{...register("email")}
 					/>
@@ -63,12 +63,9 @@ const Login = () => {
 							{errors.email.message}
 						</span>
 					)}
-					<button type="submit" className="bg-white mt-6 px-8 py-2 rounded-md">
+					<button type="submit" className="bg-white mt-6 px-8 py-2 rounded-sm">
 						Login
 					</button>
-					<Link href={"/create"} className="mt-10 text-sm text-white">
-						Dont have an account? Create an account
-					</Link>
 				</div>
 			</form>
 		</div>
