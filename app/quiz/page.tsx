@@ -3,7 +3,7 @@ import { useContextStore } from "@/hooks/useContextStore";
 import { useEffect, useState } from "react";
 import { ENDPOINTS, createAPIEndpoint } from "../api";
 import { getFormatedTime } from "@/util/formattime";
-import { time } from "console";
+import { redirect } from "next/navigation";
 
 type question = {
 	qnId: number;
@@ -29,6 +29,10 @@ const QuizPage = () => {
 	};
 
 	useEffect(() => {
+		if (id === "0") {
+			redirect("/");
+		}
+
 		createAPIEndpoint(ENDPOINTS.question)
 			.get()
 			.then((res) => {
@@ -47,7 +51,7 @@ const QuizPage = () => {
 	return (
 		<div className="flex justify-center items-center h-full text-white">
 			{questions.length != 0 ? (
-				<div className="pl-12 pr-12 py-10 rounded-md bg-[#282820]">
+				<div className="w-1/3 pl-12 pr-12 py-10 rounded-md bg-[#282820]">
 					<div className="flex justify-between text-2xl mb-4">
 						<span>Question {questionIndex + 1} of 5</span>
 						<span>{getFormatedTime(timeTaken)}</span>
