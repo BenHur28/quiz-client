@@ -2,6 +2,8 @@
 import { useContextStore } from "@/hooks/useContextStore";
 import { useEffect, useState } from "react";
 import { ENDPOINTS, createAPIEndpoint } from "../api";
+import { getFormatedTime } from "@/util/formattime";
+import { time } from "console";
 
 type question = {
 	qnId: number;
@@ -32,19 +34,23 @@ const QuizPage = () => {
 			.then((res) => {
 				setQuestions(res.data);
 				console.log(res.data);
+				startTimer();
 			})
 			.catch((err) => console.log(err));
 
 		return () => {
 			clearInterval(timer);
 		};
-	}, [timer]);
+	}, []);
 
 	return (
 		<div className="flex justify-center items-center h-full text-white">
 			{questions.length != 0 ? (
 				<div className="pl-12 pr-12 py-10 rounded-md bg-[#282820]">
-					<div className="text-2xl mb-4">Question {questionIndex + 1} of 5</div>
+					<div className="flex justify-between text-2xl mb-4">
+						<span>Question {questionIndex + 1} of 5</span>
+						<span>{getFormatedTime(timeTaken)}</span>
+					</div>
 					<div className="text-2xl mb-6">
 						{questions[questionIndex].qnInWords}
 					</div>
