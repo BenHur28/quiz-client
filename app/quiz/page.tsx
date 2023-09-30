@@ -24,7 +24,7 @@ const QuizPage = () => {
 
 	const startTimer = () => {
 		timer = setInterval(() => {
-			setTimeTaken((prev) => prev + 1);
+			setTimeTaken((prev) => prev + 0.5);
 		}, 1000);
 	};
 
@@ -63,7 +63,7 @@ const QuizPage = () => {
 						{questions[questionIndex].options.map((option, i) => (
 							<li
 								key={option}
-								className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1"
+								className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
 							>
 								{String.fromCharCode(65 + i) + ". " + option}
 							</li>
