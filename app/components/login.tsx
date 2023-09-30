@@ -43,7 +43,7 @@ const Login = () => {
 	return (
 		<div className="flex justify-center items-center h-full ">
 			<form
-				className="pl-20 pr-20 pt-12 pb-6 rounded-md bg-[#282820]"
+				className="pl-20 pr-20 py-12 rounded-md bg-[#282820]"
 				onSubmit={handleSubmit(login)}
 			>
 				<div className="flex flex-col justify-center items-center mx-auto">
