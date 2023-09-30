@@ -28,15 +28,23 @@ const QuizPage = () => {
 	}, []);
 
 	return (
-		<div className="text-white">
+		<div className="flex justify-center items-center h-full text-white">
 			{questions.length != 0 ? (
-				<div>
-					<div>{questions[questionIndex].qnInWords}</div>
-					<div>
-						{questions[questionIndex].options.map((option) => (
-							<div key={option}>{option}</div>
-						))}
+				<div className="pl-12 pr-12 py-10 rounded-md bg-[#282820]">
+					<div className="text-2xl mb-4">Question {questionIndex + 1} of 5</div>
+					<div className="text-2xl mb-6">
+						{questions[questionIndex].qnInWords}
 					</div>
+					<ul>
+						{questions[questionIndex].options.map((option, i) => (
+							<li
+								key={option}
+								className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1"
+							>
+								{String.fromCharCode(65 + i) + ". " + option}
+							</li>
+						))}
+					</ul>
 				</div>
 			) : null}
 		</div>
