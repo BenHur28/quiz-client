@@ -8,6 +8,7 @@ const QuizPage = () => {
 	localStorage.getItem(id);
 
 	const [questions, setQuestions] = useState([]);
+	const [questionIndex, setQuestionIndex] = useState(0);
 
 	useEffect(() => {
 		createAPIEndpoint(ENDPOINTS.question)
@@ -19,7 +20,13 @@ const QuizPage = () => {
 			.catch((err) => console.log(err));
 	}, []);
 
-	return <div className="text-white">{id}</div>;
+	return (
+		<div className="text-white">
+			{questions.length != 0 ? (
+				<div>{/* {questions[questionIndex].QnInWords} */}</div>
+			) : null}
+		</div>
+	);
 };
 
 export default QuizPage;

@@ -35,7 +35,7 @@ const Login = () => {
 			.then((res) => {
 				const id = res.data;
 				setContext(id.participantId);
-				router.push("/question");
+				router.push("/quiz");
 			})
 			.catch((err) => console.log(err));
 	};
