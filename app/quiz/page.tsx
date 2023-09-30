@@ -16,6 +16,15 @@ const QuizPage = () => {
 
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
+	const [timeTaken, setTimeTaken] = useState(0);
+
+	let timer: any;
+
+	const startTimer = () => {
+		timer = setInterval(() => {
+			setTimeTaken((prev) => prev + 1);
+		}, 1000);
+	};
 
 	useEffect(() => {
 		createAPIEndpoint(ENDPOINTS.question)
@@ -25,7 +34,11 @@ const QuizPage = () => {
 				console.log(res.data);
 			})
 			.catch((err) => console.log(err));
-	}, []);
+
+		return () => {
+			clearInterval(timer);
+		};
+	}, [timer]);
 
 	return (
 		<div className="flex justify-center items-center h-full text-white">
