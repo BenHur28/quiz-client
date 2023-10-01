@@ -15,8 +15,6 @@ type question = {
 
 const QuizPage = () => {
 	const id = useContextStore((state) => state.participantId);
-	localStorage.getItem(id);
-
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [timeTaken, setTimeTaken] = useState(0);
