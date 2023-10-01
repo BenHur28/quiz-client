@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 type ContextState = {
 	participantId: string;
-	setContext: (id: string) => void;
+	setContext: (id: string, option: string) => void;
 };
 
 export const useContextStore = create<ContextState>()(

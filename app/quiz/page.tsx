@@ -19,6 +19,7 @@ const QuizPage = () => {
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [timeTaken, setTimeTaken] = useState(0);
+	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
 	let timer: any;
 
@@ -48,6 +49,13 @@ const QuizPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const updateAnswer = (index: number) => {
+		const temp = [...selectedOptions];
+		temp.push(questions[questionIndex].options[index]);
+		setSelectedOptions(temp);
+		setQuestionIndex((prev) => prev + 1);
+	};
+
 	return (
 		<div className="flex justify-center items-center h-full text-white">
 			{questions.length != 0 ? (
@@ -64,6 +72,7 @@ const QuizPage = () => {
 							<li
 								key={option}
 								className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
+								onClick={() => updateAnswer(i)}
 							>
 								{String.fromCharCode(65 + i) + ". " + option}
 							</li>
