@@ -63,7 +63,7 @@ const QuizPage = () => {
 	return (
 		<div className="flex justify-center items-center h-full text-white">
 			{questions.length != 0 ? (
-				<div className="w-1/3 pl-12 pr-12 py-10 rounded-md bg-[#282820]">
+				<div className="w-2/5 pl-12 pr-12 py-10 rounded-md bg-[#282820]">
 					<div className="flex justify-between text-2xl mb-4">
 						<span>Question {questionIndex + 1} of 5</span>
 						<span>{getFormatedTime(timeTaken)}</span>
@@ -72,9 +72,10 @@ const QuizPage = () => {
 						{questions[questionIndex].qnInWords}
 						{questions[questionIndex].image != null ? (
 							<Image
+								className="mt-8 mx-auto"
 								alt=""
-								width={60}
-								height={60}
+								width={300}
+								height={300}
 								src={BASE_URL + "images/" + questions[questionIndex].image}
 							></Image>
 						) : null}
