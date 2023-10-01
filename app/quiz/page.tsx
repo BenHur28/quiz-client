@@ -1,9 +1,10 @@
 "use client";
 import { useContextStore } from "@/hooks/useContextStore";
 import { useEffect, useState } from "react";
-import { ENDPOINTS, createAPIEndpoint } from "../api";
+import { BASE_URL, ENDPOINTS, createAPIEndpoint } from "../api";
 import { getFormatedTime } from "@/util/formattime";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 type question = {
 	qnId: number;
@@ -19,6 +20,7 @@ const QuizPage = () => {
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [timeTaken, setTimeTaken] = useState(0);
+	const [finalTime, setFinalTime] = useState(0);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
 	let timer: any;
@@ -53,7 +55,11 @@ const QuizPage = () => {
 		const temp = [...selectedOptions];
 		temp.push(questions[questionIndex].options[index]);
 		setSelectedOptions(temp);
-		setQuestionIndex((prev) => prev + 1);
+		if (questionIndex < 4) {
+			setQuestionIndex((prev) => prev + 1);
+		} else {
+			setFinalTime(timeTaken);
+		}
 	};
 
 	return (
@@ -66,6 +72,14 @@ const QuizPage = () => {
 					</div>
 					<div className="text-2xl mb-6">
 						{questions[questionIndex].qnInWords}
+						{questions[questionIndex].image != null ? (
+							<Image
+								alt=""
+								width={60}
+								height={60}
+								src={BASE_URL + "images/" + questions[questionIndex].image}
+							></Image>
+						) : null}
 					</div>
 					<ul>
 						{questions[questionIndex].options.map((option, i) => (
