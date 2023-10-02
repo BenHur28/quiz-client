@@ -1,6 +1,12 @@
+import { useContextStore } from "@/hooks/useContextStore";
+import { useRouter } from "next/navigation";
+
 const Navbar = () => {
+	const router = useRouter();
+	const { setContext } = useContextStore();
 	const logout = () => {
-		console.log("logout");
+		setContext("0");
+		router.push("/");
 	};
 
 	return (
