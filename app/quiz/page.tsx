@@ -6,6 +6,7 @@ import { getFormatedTime } from "@/util/formattime";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../components/navbar";
+import { useRouter } from "next/navigation";
 
 type question = {
 	qnId: number;
@@ -15,6 +16,7 @@ type question = {
 };
 
 const QuizPage = () => {
+	const router = useRouter();
 	const id = useContextStore((state) => state.participantId);
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
@@ -58,6 +60,7 @@ const QuizPage = () => {
 			setQuestionIndex((prev) => prev + 1);
 		} else {
 			setFinalTime(timeTaken);
+			router.push("/result");
 		}
 	};
 
