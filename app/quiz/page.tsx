@@ -5,6 +5,7 @@ import { BASE_URL, ENDPOINTS, createAPIEndpoint } from "../api";
 import { getFormatedTime } from "@/util/formattime";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import Navbar from "../components/navbar";
 
 type question = {
 	qnId: number;
@@ -61,38 +62,41 @@ const QuizPage = () => {
 	};
 
 	return (
-		<div className="flex justify-center items-center h-full text-white">
-			{questions.length != 0 ? (
-				<div className="w-2/5 pl-12 pr-12 py-10 rounded-md bg-[#282820]">
-					<div className="flex justify-between text-2xl mb-4">
-						<span>Question {questionIndex + 1} of 5</span>
-						<span>{getFormatedTime(timeTaken)}</span>
+		<div className="h-full">
+			<Navbar />
+			<div className="flex justify-center items-center h-full text-white">
+				{questions.length != 0 ? (
+					<div className="w-2/5 pl-12 pr-12 py-10 rounded-md bg-[#282820]">
+						<div className="flex justify-between text-2xl mb-4">
+							<span>Question {questionIndex + 1} of 5</span>
+							<span>{getFormatedTime(timeTaken)}</span>
+						</div>
+						<div className="text-2xl mb-6">
+							{questions[questionIndex].qnInWords}
+							{questions[questionIndex].image != null ? (
+								<Image
+									className="mt-8 mx-auto"
+									alt=""
+									width={300}
+									height={300}
+									src={BASE_URL + "images/" + questions[questionIndex].image}
+								></Image>
+							) : null}
+						</div>
+						<ul>
+							{questions[questionIndex].options.map((option, i) => (
+								<li
+									key={option}
+									className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
+									onClick={() => updateAnswer(i)}
+								>
+									{String.fromCharCode(65 + i) + ". " + option}
+								</li>
+							))}
+						</ul>
 					</div>
-					<div className="text-2xl mb-6">
-						{questions[questionIndex].qnInWords}
-						{questions[questionIndex].image != null ? (
-							<Image
-								className="mt-8 mx-auto"
-								alt=""
-								width={300}
-								height={300}
-								src={BASE_URL + "images/" + questions[questionIndex].image}
-							></Image>
-						) : null}
-					</div>
-					<ul>
-						{questions[questionIndex].options.map((option, i) => (
-							<li
-								key={option}
-								className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
-								onClick={() => updateAnswer(i)}
-							>
-								{String.fromCharCode(65 + i) + ". " + option}
-							</li>
-						))}
-					</ul>
-				</div>
-			) : null}
+				) : null}
+			</div>
 		</div>
 	);
 };
