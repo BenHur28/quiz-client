@@ -8,6 +8,7 @@ import Image from "next/image";
 import Navbar from "../components/navbar";
 import { useRouter } from "next/navigation";
 import { useQnIdStore } from "@/hooks/useIdStore";
+import { useAnswerStore } from "@/hooks/useAnswerStore";
 
 type question = {
 	qnId: number;
@@ -20,12 +21,14 @@ const QuizPage = () => {
 	const router = useRouter();
 	const id = useContextStore((state) => state.participantId);
 	const { setContextQnId } = useQnIdStore();
+	const { setContextAnswers } = useAnswerStore();
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [timeTaken, setTimeTaken] = useState(0);
 	const [finalTime, setFinalTime] = useState(0);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
+	const [answers, setAnswers] = useState<number[]>([]);
 
 	let timer: any;
 
@@ -56,17 +59,21 @@ const QuizPage = () => {
 	}, []);
 
 	const updateAnswer = (index: number, id: number) => {
-		const temp = [...selectedOptions];
+		const tempOptions = [...selectedOptions];
 		const tempIds = [...selectedIds];
-		temp.push(questions[questionIndex].options[index]);
+		const tempAnswers = [...answers];
+		tempOptions.push(questions[questionIndex].options[index]);
 		tempIds.push(id);
-		setSelectedOptions(temp);
+		tempAnswers.push(index);
+		setSelectedOptions(tempOptions);
 		setSelectedIds(tempIds);
+		setAnswers(tempAnswers);
 		if (questionIndex < 4) {
 			setQuestionIndex((prev) => prev + 1);
 		} else {
 			setFinalTime(timeTaken);
 			setContextQnId(tempIds);
+			setContextAnswers(tempAnswers);
 			router.push("/result");
 		}
 	};
