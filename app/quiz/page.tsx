@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../components/navbar";
 import { useRouter } from "next/navigation";
+import { useQnIdStore } from "@/hooks/useIdStore";
 
 type question = {
 	qnId: number;
@@ -18,11 +19,13 @@ type question = {
 const QuizPage = () => {
 	const router = useRouter();
 	const id = useContextStore((state) => state.participantId);
+	const { setContextQnId } = useQnIdStore();
 	const [questions, setQuestions] = useState<question[]>([]);
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [timeTaken, setTimeTaken] = useState(0);
 	const [finalTime, setFinalTime] = useState(0);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
 	let timer: any;
 
@@ -52,14 +55,18 @@ const QuizPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const updateAnswer = (index: number) => {
+	const updateAnswer = (index: number, id: string) => {
 		const temp = [...selectedOptions];
+		const tempIds = [...selectedIds];
 		temp.push(questions[questionIndex].options[index]);
+		tempIds.push(id);
 		setSelectedOptions(temp);
+		setSelectedIds(tempIds);
 		if (questionIndex < 4) {
 			setQuestionIndex((prev) => prev + 1);
 		} else {
 			setFinalTime(timeTaken);
+			setContextQnId(tempIds);
 			router.push("/result");
 		}
 	};
@@ -91,7 +98,9 @@ const QuizPage = () => {
 								<li
 									key={option}
 									className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
-									onClick={() => updateAnswer(i)}
+									onClick={() =>
+										updateAnswer(i, questions[questionIndex].qnId.toString())
+									}
 								>
 									{String.fromCharCode(65 + i) + ". " + option}
 								</li>
