@@ -2,15 +2,15 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type ContextState = {
-	qnIds: string[];
-	setContextQnId: (qnIds: string[]) => void;
+	qnIds: number[];
+	setContextQnId: (qnIds: number[]) => void;
 };
 
 export const useQnIdStore = create<ContextState>()(
 	persist(
 		(set) => ({
 			qnIds: [],
-			setContextQnId: (qnIds: string[]) => set({ qnIds }),
+			setContextQnId: (qnIds: number[]) => set({ qnIds }),
 		}),
 		{
 			name: "qnId store",

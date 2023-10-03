@@ -25,7 +25,7 @@ const QuizPage = () => {
 	const [timeTaken, setTimeTaken] = useState(0);
 	const [finalTime, setFinalTime] = useState(0);
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
 	let timer: any;
 
@@ -55,7 +55,7 @@ const QuizPage = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const updateAnswer = (index: number, id: string) => {
+	const updateAnswer = (index: number, id: number) => {
 		const temp = [...selectedOptions];
 		const tempIds = [...selectedIds];
 		temp.push(questions[questionIndex].options[index]);
@@ -98,9 +98,7 @@ const QuizPage = () => {
 								<li
 									key={option}
 									className="text-lg hover:bg-slate-600 rounded-sm px-2 py-1 cursor-pointer"
-									onClick={() =>
-										updateAnswer(i, questions[questionIndex].qnId.toString())
-									}
+									onClick={() => updateAnswer(i, questions[questionIndex].qnId)}
 								>
 									{String.fromCharCode(65 + i) + ". " + option}
 								</li>

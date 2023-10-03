@@ -14,7 +14,6 @@ type FormData = {
 
 const Login = () => {
 	const id = useContextStore((state) => state.participantId);
-	console.log(id);
 	const router = useRouter();
 	const { setContext } = useContextStore();
 	const formSchema: ZodType<FormData> = z.object({
