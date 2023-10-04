@@ -1,13 +1,15 @@
 "use client";
-
 import { useQnIdStore } from "@/hooks/useIdStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ENDPOINTS, createAPIEndpoint } from "../api";
 import { useAnswerStore } from "@/hooks/useAnswerStore";
+import Image from "next/image";
 
 const ResultPage = () => {
 	const qnIds = useQnIdStore((state) => state.qnIds);
 	const answers = useAnswerStore((state) => state.answers);
+	const [score, setScore] = useState(0);
+
 	const mapQNA = () => {
 		const map: any = {};
 		for (let i = 0; i < 5; i++) {
@@ -17,7 +19,6 @@ const ResultPage = () => {
 	};
 	useEffect(() => {
 		const qna = mapQNA();
-		console.log(qna);
 		createAPIEndpoint(ENDPOINTS.getAnswers)
 			.postAnswer(qnIds)
 			.then((res) => {
@@ -37,10 +38,31 @@ const ResultPage = () => {
 				}
 			}
 		}
-		console.log(correct);
+		setScore(correct);
 	};
 
-	return <div>ResultPage</div>;
+	const retry = () => {};
+
+	return (
+		<div className="flex justify-center items-center h-full">
+			<div className="flex flex-col items-center pl-20 pr-20 py-12 rounded-md bg-[#282820]">
+				<Image
+					className="bg-[#282820]"
+					alt=""
+					src="/trophy.png"
+					width={140}
+					height={140}
+				/>
+				<div className="text-white text-2xl mt-8">
+					Results: {score} out of 5 correct!
+				</div>
+				<div className="text-white text-2xl mt-2">Want to try again?</div>
+				<button onClick={} className="bg-white mt-6 px-8 py-2 rounded-sm">
+					Retry
+				</button>
+			</div>
+		</div>
+	);
 };
 
 export default ResultPage;
